@@ -1,0 +1,19 @@
+body {
+  background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQGlBE-SRTu1kfq92pryGbkSe3L6a8DZ7PMw&usqp=CAU);
+  height: 100vh;
+}
+
+.weatherContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.weatherWrap {
+  border: 3px solid white;
+  padding: 50px;
+  border-radius: 30px;
+  background-color: beige;
+}
