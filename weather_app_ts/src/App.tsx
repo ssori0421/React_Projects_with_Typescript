@@ -28,7 +28,7 @@ function App() {
     });
   };
 
-  const getWeatherByCurrentLocation = async (lat: any, lon: any) => {
+  const getWeatherByCurrentLocation = async (lat: number, lon: number) => {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=e919bb3b5b58a2b3ce50ef98fb148e5a&units=metric  `;
     setLoading(true);
     let response = await fetch(url);
