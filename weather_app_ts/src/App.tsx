@@ -6,9 +6,11 @@ import WeatherBox from './component/WeatherBox';
 
 import ClipLoader from 'react-spinners/ClipLoader';
 import ButtonBox from './component/ButtonBox';
+import { IWeather } from './types/weather';
+
 
 function App() {
-  const [weather, setWeather] = useState(null);
+  const [weather, setWeather] = useState<IWeather>();
   const [city, setCity] = useState('');
   const [loading, setLoading] = useState(false);
   const cities = ['paris', 'new york', 'tokyo', 'seoul'];
@@ -55,7 +57,7 @@ function App() {
         </div>
       ) : (
         <div className='weatherContainer'>
-          <WeatherBox weather={weather} />
+          {weather && <WeatherBox weather={weather} />}
           <ButtonBox cities={cities} setCity={setCity} />
         </div>
       )}
