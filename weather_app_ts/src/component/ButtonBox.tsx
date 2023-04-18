@@ -1,7 +1,13 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-const ButtonBox = ({ cities, setCity }: { cities: any; setCity: any }) => {
+const ButtonBox = ({
+  cities,
+  setCity,
+}: {
+  cities: string[];
+  setCity: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   return (
     <div>
       <Button variant='warning'>Current Location</Button>
