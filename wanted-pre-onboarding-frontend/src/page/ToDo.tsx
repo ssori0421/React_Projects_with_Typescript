@@ -7,8 +7,8 @@ import TodoItem from '../components/TodoItem';
 import { palette } from '../styles/palette';
 
 const ToDo = () => {
-  const [todoList, setTodoList] = useState();
-  const [todoInput, setTodoInput] = useState('');
+  const [todoList, setTodoList] = useState<any>();
+  const [todoInput, setTodoInput] = useState<any>('');
   useRedirect();
 
   const getTodoList = useCallback(async () => {
@@ -20,7 +20,7 @@ const ToDo = () => {
     getTodoList();
   }, [getTodoList]);
 
-  const onSubmitTodo = async (e) => {
+  const onSubmitTodo = async (e: any) => {
     e.preventDefault();
     const body = {
       todo: todoInput,
@@ -34,13 +34,13 @@ const ToDo = () => {
     }
   };
 
-  const onUpdateTodo = async (id, todo, isCompleted) => {
+  const onUpdateTodo = async (id: any, todo: any, isCompleted: any) => {
     const body = {
       todo,
       isCompleted,
     };
     await updateTodo(id, body);
-    const updatedTodoList = todoList.map((item) => {
+    const updatedTodoList = todoList.map((item: any) => {
       if (item.id === id) {
         return { ...item, todo, isCompleted };
       }
@@ -49,18 +49,18 @@ const ToDo = () => {
     setTodoList(updatedTodoList);
   };
 
-  const onDeleteTodo = async (e) => {
+  const onDeleteTodo = async (e: any) => {
     const id = Number(e.target.value);
     try {
       await deleteTodo(id);
-      const filteredTodo = todoList.filter((todo) => todo.id !== id);
+      const filteredTodo = todoList.filter((todo: any) => todo.id !== id);
       setTodoList(filteredTodo);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const onChangeInputHandler = (e) => {
+  const onChangeInputHandler = (e: any) => {
     setTodoInput(e.target.value);
   };
 
@@ -80,7 +80,7 @@ const ToDo = () => {
         <StTodoListContainer>
           <StUl>
             {todoList &&
-              todoList.map((v) => (
+              todoList.map((v: any) => (
                 <TodoItem
                   key={v.id}
                   value={v}

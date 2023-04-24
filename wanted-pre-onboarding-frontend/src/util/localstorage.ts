@@ -1,4 +1,4 @@
-const setAccessToken = (token) => {
+const setAccessToken = (token: string) => {
   localStorage.setItem('access_token', JSON.stringify(token));
 };
 

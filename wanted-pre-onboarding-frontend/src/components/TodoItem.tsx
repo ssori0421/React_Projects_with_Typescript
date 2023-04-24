@@ -1,9 +1,10 @@
+import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import SmallButton from './SmallButton';
 
-const TodoItem = ({ value, onDeleteTodo, onUpdateTodo }) => {
+const TodoItem = ({ value, onDeleteTodo, onUpdateTodo }:{ value:any, onDeleteTodo:any, onUpdateTodo:any }) => {
   const { id, todo, isCompleted } = value;
   const [inputTodo, setInputTodo] = useState(todo);
   const [isModify, setIsModify] = useState(false);
@@ -12,7 +13,7 @@ const TodoItem = ({ value, onDeleteTodo, onUpdateTodo }) => {
     setIsModify((_isModify) => !_isModify);
   };
 
-  const onCompleteHandler = (e) => {
+  const onCompleteHandler = (e:any) => {
     const { checked } = e.target;
     onUpdateTodo(id, inputTodo, checked);
   };

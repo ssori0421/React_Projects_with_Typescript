@@ -1,6 +1,7 @@
+import React from 'react';
 import styled from 'styled-components';
 
-const PageLayout = ({ children, title }) => {
+const PageLayout = ({ children, title }: { children: any; title: any }) => {
   return (
     <PageContainer>
       <StTitle>{title}</StTitle>

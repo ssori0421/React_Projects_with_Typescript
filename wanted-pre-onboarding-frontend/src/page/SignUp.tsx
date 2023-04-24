@@ -3,7 +3,7 @@ import { regex } from '../util/regex';
 import styled from 'styled-components';
 import { useRouter } from '../hooks/useRouter';
 import { routePath } from '../routes';
-import { postSignIn } from '../service/auth';
+import { postSignUp } from '../service/auth';
 import useRedirect from '../hooks/useRedirect';
 import PageLayout from '../components/PageLayout';
 import { palette } from '../styles/palette';
@@ -32,12 +32,12 @@ const SignUp = () => {
     }
   }, [formState]);
 
-  const onEmailChange = (e) => {
+  const onEmailChange = (e: any) => {
     const { value } = e.target;
     const isvalid = regex.email.test(value);
     setFormState({ ...formState, email: { value, isvalid } });
   };
-  const onPasswordChange = (e) => {
+  const onPasswordChange = (e: any) => {
     const { value } = e.target;
     const isvalid = regex.password.test(value);
     setFormState({
@@ -46,22 +46,22 @@ const SignUp = () => {
     });
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
     const body = {
       email: formState.email.value,
       password: formState.password.value,
     };
     try {
-      await postSignIn(body);
-      routeTo(routePath.todo);
+      await postSignUp(body);
+      routeTo(routePath.signin);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <PageLayout title={'로그인'}>
+    <PageLayout title={'회원가입'}>
       <StInputForm onSubmit={onSubmit}>
         <p>이메일</p>
         <StInput
@@ -81,8 +81,8 @@ const SignUp = () => {
           onChange={onPasswordChange}
         />
         <StMessage>비밀번호는 8자 이상 작성해 주세요.</StMessage>
-        <Button disabled={isDisabled} data-testid='signin-button'>
-          로그인
+        <Button disabled={isDisabled} data-testid='signup-button'>
+          회원가입
         </Button>
       </StInputForm>
     </PageLayout>

@@ -10,7 +10,7 @@ export const useRouter = () => {
   const router = useNavigate();
 
   return {
-    routeTo: (path) => router(path),
+    routeTo: (path: string) => router(path),
     pathName: window.location.pathname,
   };
 };
