@@ -11,7 +11,7 @@ const ButtonBox = ({
   return (
     <div>
       <Button variant='warning'>Current Location</Button>
-      {cities.map((item: any) => (
+      {cities.map((item) => (
         <Button variant='warning' onClick={() => setCity(item)}>
           {item}
         </Button>
