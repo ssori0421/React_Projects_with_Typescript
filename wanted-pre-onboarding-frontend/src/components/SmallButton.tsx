@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 
+type Varient = 'outlined' | 'fill';
+
 const SmallButton = ({
-  varient,
+  varient = 'fill',
   onClick,
   data_testid,
   children,
   value,
 }: {
-  varient: any;
-  onClick: any;
-  data_testid: any;
-  children: any;
-  value: any;
+  varient?: Varient;
+  onClick?: any;
+  data_testid?: string;
+  children?: ReactNode;
+  value?: string | number;
 }) => {
   return (
     <StSmallButton
@@ -34,10 +36,10 @@ const StSmallButton = styled.button`
   border-radius: 4px;
   padding: 4px 8px;
   margin-right: 4px;
-  background-color: ${(props: { varient: any }) =>
+  background-color: ${(props: { varient: Varient }) =>
     props.varient === 'outlined' ? palette.white : palette.mainColor};
-  color: ${(props: { varient: any }) =>
+  color: ${(props: { varient: Varient }) =>
     props.varient === 'outlined' ? palette.mainColor : palette.white};
-  border: ${(props: { varient: any }) =>
+  border: ${(props: { varient: Varient }) =>
     props.varient === 'outlined' ? `1px solid ${palette.mainColor}` : 'none'};
 `;
