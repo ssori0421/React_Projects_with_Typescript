@@ -10,7 +10,7 @@ import { palette } from '../styles/palette';
 
 interface IState {
   value: string;
-  isvalid: boolean;
+  isValid: boolean;
 }
 
 interface IFormStates {
@@ -22,11 +22,11 @@ const SignUp = () => {
   const [formState, setFormState] = useState<IFormStates>({
     email: {
       value: '',
-      isvalid: false,
+      isValid: false,
     },
     password: {
       value: '',
-      isvalid: false,
+      isValid: false,
     },
   });
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -35,7 +35,7 @@ const SignUp = () => {
   useRedirect();
 
   useEffect(() => {
-    if (formState.email.isvalid && formState.password.isvalid) {
+    if (formState.email.isValid && formState.password.isValid) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -44,15 +44,15 @@ const SignUp = () => {
 
   const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    const isvalid = regex.email.test(value);
-    setFormState({ ...formState, email: { value, isvalid } });
+    const isValid = regex.email.test(value);
+    setFormState({ ...formState, email: { value, isValid } });
   };
   const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    const isvalid = regex.password.test(value);
+    const isValid = regex.password.test(value);
     setFormState({
       ...formState,
-      password: { value, isvalid },
+      password: { value, isValid },
     });
   };
 
