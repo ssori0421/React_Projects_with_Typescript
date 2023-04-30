@@ -4,7 +4,15 @@ import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import SmallButton from './SmallButton';
 
-const TodoItem = ({ value, onDeleteTodo, onUpdateTodo }:{ value:any, onDeleteTodo:any, onUpdateTodo:any }) => {
+const TodoItem = ({
+  value,
+  onDeleteTodo,
+  onUpdateTodo,
+}: {
+  value: any;
+  onDeleteTodo: any;
+  onUpdateTodo: any;
+}) => {
   const { id, todo, isCompleted } = value;
   const [inputTodo, setInputTodo] = useState(todo);
   const [isModify, setIsModify] = useState(false);
@@ -13,7 +21,7 @@ const TodoItem = ({ value, onDeleteTodo, onUpdateTodo }:{ value:any, onDeleteTod
     setIsModify((_isModify) => !_isModify);
   };
 
-  const onCompleteHandler = (e:any) => {
+  const onCompleteHandler = (e: any) => {
     const { checked } = e.target;
     onUpdateTodo(id, inputTodo, checked);
   };
@@ -21,6 +29,11 @@ const TodoItem = ({ value, onDeleteTodo, onUpdateTodo }:{ value:any, onDeleteTod
   const onUpdate = () => {
     onUpdateTodo(id, inputTodo, isCompleted);
     setIsModify(false);
+  };
+
+  const onCancelTodo = () => {
+    setInputTodo(todo);
+    onModifyHandler();
   };
 
   return (
@@ -47,7 +60,7 @@ const TodoItem = ({ value, onDeleteTodo, onUpdateTodo }:{ value:any, onDeleteTod
           <SmallButton
             data_testid='cancel-button'
             varient={'outlined'}
-            onClick={onModifyHandler}
+            onClick={onCancelTodo}
           >
             취소
           </SmallButton>
