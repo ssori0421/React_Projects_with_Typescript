@@ -1,27 +1,35 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { palette } from '../styles/palette';
 import SmallButton from './SmallButton';
+import { ITodo } from '../types/todo';
 
 const TodoItem = ({
   value,
-  onDeleteTodo,
+  onDeleteTodo: onDelete,
   onUpdateTodo,
 }: {
-  value: any;
-  onDeleteTodo: any;
-  onUpdateTodo: any;
+  value: ITodo;
+  onDeleteTodo: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: number
+  ) => Promise<void>;
+  onUpdateTodo: (
+    id: number,
+    todo: string,
+    isCompleted: boolean
+  ) => Promise<void>;
 }) => {
   const { id, todo, isCompleted } = value;
-  const [inputTodo, setInputTodo] = useState(todo);
-  const [isModify, setIsModify] = useState(false);
+  const [inputTodo, setInputTodo] = useState<string>(todo);
+  const [isModify, setIsModify] = useState<boolean>(false);
 
   const onModifyHandler = () => {
     setIsModify((_isModify) => !_isModify);
   };
 
-  const onCompleteHandler = (e: any) => {
+  const onCompleteHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     onUpdateTodo(id, inputTodo, checked);
   };
@@ -34,6 +42,10 @@ const TodoItem = ({
   const onCancelTodo = () => {
     setInputTodo(todo);
     onModifyHandler();
+  };
+
+  const onDeleteTodo = (e: React.MouseEvent<HTMLButtonElement>) => {
+    onDelete(e, id);
   };
 
   return (
