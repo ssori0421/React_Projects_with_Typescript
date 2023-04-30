@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
-const PageLayout = ({ children, title }: { children: any; title: any }) => {
+const PageLayout = ({
+  children,
+  title,
+}: {
+  children: ReactNode;
+  title: string;
+}) => {
   return (
     <PageContainer>
       <StTitle>{title}</StTitle>
