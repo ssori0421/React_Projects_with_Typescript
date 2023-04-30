@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { regex } from '../util/regex';
 import styled from 'styled-components';
 import { useRouter } from '../hooks/useRouter';
@@ -8,45 +8,55 @@ import useRedirect from '../hooks/useRedirect';
 import PageLayout from '../components/PageLayout';
 import { palette } from '../styles/palette';
 
+interface IState {
+  value: string;
+  isValid: boolean;
+}
+
+interface IFormStates {
+  email: IState;
+  password: IState;
+}
+
 const SignUp = () => {
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<IFormStates>({
     email: {
       value: '',
-      isvalid: false,
+      isValid: false,
     },
     password: {
       value: '',
-      isvalid: false,
+      isValid: false,
     },
   });
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const { routeTo } = useRouter();
 
   useRedirect();
 
   useEffect(() => {
-    if (formState.email.isvalid && formState.password.isvalid) {
+    if (formState.email.isValid && formState.password.isValid) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
   }, [formState]);
 
-  const onEmailChange = (e: any) => {
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    const isvalid = regex.email.test(value);
-    setFormState({ ...formState, email: { value, isvalid } });
+    const isValid = regex.email.test(value);
+    setFormState({ ...formState, email: { value, isValid } });
   };
-  const onPasswordChange = (e: any) => {
+  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    const isvalid = regex.password.test(value);
+    const isValid = regex.password.test(value);
     setFormState({
       ...formState,
-      password: { value, isvalid },
+      password: { value, isValid },
     });
   };
 
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const body = {
       email: formState.email.value,
