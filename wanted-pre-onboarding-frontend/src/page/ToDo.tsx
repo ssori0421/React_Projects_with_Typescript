@@ -1,14 +1,21 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import useRedirect from '../hooks/useRedirect';
 import PageLayout from '../components/PageLayout';
 import styled from 'styled-components';
 import { createTodo, deleteTodo, getTodo, updateTodo } from '../service/todo';
 import TodoItem from '../components/TodoItem';
 import { palette } from '../styles/palette';
+import { ITodo } from '../types/todo';
 
 const ToDo = () => {
-  const [todoList, setTodoList] = useState<any>();
-  const [todoInput, setTodoInput] = useState<any>('');
+  const [todoList, setTodoList] = useState<ITodo[]>();
+  const [todoInput, setTodoInput] = useState<string>('');
   useRedirect();
 
   const getTodoList = useCallback(async () => {
@@ -20,7 +27,7 @@ const ToDo = () => {
     getTodoList();
   }, [getTodoList]);
 
-  const onSubmitTodo = async (e: any) => {
+  const onSubmitTodo = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const body = {
       todo: todoInput,
@@ -28,39 +35,51 @@ const ToDo = () => {
     try {
       const data = await createTodo(body);
       setTodoInput('');
-      setTodoList([...todoList, data]);
+      if (todoList) {
+        setTodoList([...todoList, data]);
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const onUpdateTodo = async (id: any, todo: any, isCompleted: any) => {
+  const onUpdateTodo = async (
+    id: number,
+    todo: string,
+    isCompleted: boolean
+  ) => {
     const body = {
       todo,
       isCompleted,
     };
     await updateTodo(id, body);
-    const updatedTodoList = todoList.map((item: any) => {
-      if (item.id === id) {
-        return { ...item, todo, isCompleted };
-      }
-      return item;
-    });
-    setTodoList(updatedTodoList);
+    if (todoList) {
+      const updatedTodoList = todoList.map((item) => {
+        if (item.id === id) {
+          return { ...item, todo, isCompleted };
+        }
+        return item;
+      });
+      setTodoList(updatedTodoList);
+    }
   };
 
-  const onDeleteTodo = async (e: any) => {
-    const id = Number(e.target.value);
+  const onDeleteTodo = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: number
+  ) => {
     try {
       await deleteTodo(id);
-      const filteredTodo = todoList.filter((todo: any) => todo.id !== id);
-      setTodoList(filteredTodo);
+      if (todoList) {
+        const filteredTodo = todoList.filter((todo) => todo.id !== id);
+        setTodoList(filteredTodo);
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const onChangeInputHandler = (e: any) => {
+  const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setTodoInput(e.target.value);
   };
 
@@ -80,7 +99,7 @@ const ToDo = () => {
         <StTodoListContainer>
           <StUl>
             {todoList &&
-              todoList.map((v: any) => (
+              todoList.map((v) => (
                 <TodoItem
                   key={v.id}
                   value={v}
